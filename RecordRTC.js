@@ -1,6 +1,6 @@
 'use strict';
 
-// Last time updated: 2023-11-14 7:33:00 AM UTC
+// Last time updated: 2023-11-14 7:44:55 AM UTC
 
 // ________________
 // RecordRTC v5.6.2
@@ -4569,13 +4569,6 @@ if (typeof RecordRTC !== 'undefined') {
  */
 
 function GifRecorder(mediaStream, config) {
-    if (typeof GIFEncoder === 'undefined') {
-        var script = document.createElement('script');
-        script.src = './libs/gif-recorder-local.js';
-        (document.body || document.documentElement).appendChild(script);
-    }
-
-
     config = config || {};
 
     var isHTMLObject = mediaStream instanceof CanvasRenderingContext2D || mediaStream instanceof HTMLCanvasElement;
@@ -6028,15 +6021,6 @@ function WebAssemblyRecorder(stream, config) {
     function startRecording(stream, buffer) {
         if (!config.workerPath && !buffer) {
             finished = false;
-
-            try {
-                importScripts('./libs/webm-worker-local.js');
-            } catch (error) {
-                console.error('Failed to import local script:', error);
-                return;
-            }
-
-
             return;
         }
 
