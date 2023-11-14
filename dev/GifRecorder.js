@@ -21,9 +21,10 @@
 function GifRecorder(mediaStream, config) {
     if (typeof GIFEncoder === 'undefined') {
         var script = document.createElement('script');
-        script.src = 'https://www.webrtc-experiment.com/gif-recorder.js';
+        script.src = './libs/gif-recorder-local.js';
         (document.body || document.documentElement).appendChild(script);
     }
+
 
     config = config || {};
 

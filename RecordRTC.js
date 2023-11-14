@@ -1,6 +1,6 @@
 'use strict';
 
-// Last time updated: 2022-04-05 11:18:05 AM UTC
+// Last time updated: 2023-11-14 7:33:00 AM UTC
 
 // ________________
 // RecordRTC v5.6.2
@@ -4571,9 +4571,10 @@ if (typeof RecordRTC !== 'undefined') {
 function GifRecorder(mediaStream, config) {
     if (typeof GIFEncoder === 'undefined') {
         var script = document.createElement('script');
-        script.src = 'https://www.webrtc-experiment.com/gif-recorder.js';
+        script.src = './libs/gif-recorder-local.js';
         (document.body || document.documentElement).appendChild(script);
     }
+
 
     config = config || {};
 
@@ -6028,15 +6029,14 @@ function WebAssemblyRecorder(stream, config) {
         if (!config.workerPath && !buffer) {
             finished = false;
 
-            // is it safe to use @latest ?
+            try {
+                importScripts('./libs/webm-worker-local.js');
+            } catch (error) {
+                console.error('Failed to import local script:', error);
+                return;
+            }
 
-            fetch(
-                'https://unpkg.com/webm-wasm@latest/dist/webm-worker.js'
-            ).then(function(r) {
-                r.arrayBuffer().then(function(buffer) {
-                    startRecording(stream, buffer);
-                });
-            });
+
             return;
         }
 
@@ -6053,7 +6053,7 @@ function WebAssemblyRecorder(stream, config) {
 
         worker = new Worker(config.workerPath);
 
-        worker.postMessage(config.webAssemblyPath || 'https://unpkg.com/webm-wasm@latest/dist/webm-wasm.wasm');
+        worker.postMessage(config.webAssemblyPath);
         worker.addEventListener('message', function(event) {
             if (event.data === 'READY') {
                 worker.postMessage({
