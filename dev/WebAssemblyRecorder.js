@@ -91,15 +91,6 @@ function WebAssemblyRecorder(stream, config) {
     function startRecording(stream, buffer) {
         if (!config.workerPath && !buffer) {
             finished = false;
-
-            try {
-                importScripts('./libs/webm-worker-local.js');
-            } catch (error) {
-                console.error('Failed to import local script:', error);
-                return;
-            }
-
-
             return;
         }
 

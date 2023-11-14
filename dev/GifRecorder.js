@@ -19,13 +19,6 @@
  */
 
 function GifRecorder(mediaStream, config) {
-    if (typeof GIFEncoder === 'undefined') {
-        var script = document.createElement('script');
-        script.src = './libs/gif-recorder-local.js';
-        (document.body || document.documentElement).appendChild(script);
-    }
-
-
     config = config || {};
 
     var isHTMLObject = mediaStream instanceof CanvasRenderingContext2D || mediaStream instanceof HTMLCanvasElement;
